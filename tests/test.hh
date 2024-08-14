@@ -76,3 +76,40 @@ private:
 	unsigned int sec_tests_passed;
 	
 };
+
+/**
+ * @brief supervisor functions
+ *  @method Begin() : use begin to start a test unit (like for a class)
+ *  @method End() : used in the main return statement to finish a test unit
+ *  @method GROUP_TEST(std::function<int>) takes a function and outputs the results of the tests that happen within
+ */
+
+// todo
+
+
+/**
+ * @brief in unit methods
+ *  @method TEST(std::string, test...) : adds ++ to error_counter local var if all tests pass.
+ *          if not, print error lines and go to next unit.
+ */
+
+// constexpr void TEST (std::string, test...)
+#define TESTER(error_counter) [&error_counter](bool tests) { if (!tests) { ++error_counter; }}
+
+// #include <functional>
+
+
+// class WOF
+// {
+// 	public:
+// 	WOF(std::string)
+// 	{}
+
+
+// 	void Begin();
+// 	void GROUP_TEST(std::function<int>);
+// 	void End();
+
+// 	private:
+// };
+
