@@ -77,14 +77,14 @@ private:
 	
 };
 
-/**
- * @brief supervisor functions
- *  @method Begin() : use begin to start a test unit (like for a class)
- *  @method End() : used in the main return statement to finish a test unit
- *  @method GROUP_TEST(std::function<int>) takes a function and outputs the results of the tests that happen within
- */
-
-// todo
+//                    █████       ████ 
+//                  ███░░░███    ░░███ 
+//  █████ █████    ███   ░░███    ░███ 
+// ░░███ ░░███    ░███    ░███    ░███ 
+//  ░███  ░███    ░███    ░███    ░███ 
+//  ░░███ ███     ░░███   ███     ░███ 
+//   ░░█████       ░░░█████░   ██ █████
+//    ░░░░░          ░░░░░░   ░░ ░░░░░ 
 
 
 /**
@@ -96,20 +96,19 @@ private:
 // constexpr void TEST (std::string, test...)
 #define TESTER(error_counter) [&error_counter](bool tests) { if (!tests) { ++error_counter; }}
 
-// #include <functional>
+
+/**
+ * @brief supervisor functions
+ *  !//@method Begin() : use begin to start a test unit (like for a class)
+ *  !//@method End() : used in the main return statement to finish a test unit
+ *  @method GROUP_TEST(std::function<int>) takes a function and outputs the results of the tests that happen within
+ */
+
+// todo
+
+#include <functional>
+
+#define GROUP_TEST(error_counter) [&error_counter](std::function<int()> func) {int tmp_counter = func(); if(tmp_counter != 0) {error_counter += tmp_counter; std::cout <<  "GTest error_counter: " << error_counter << std::endl;}}
 
 
-// class WOF
-// {
-// 	public:
-// 	WOF(std::string)
-// 	{}
-
-
-// 	void Begin();
-// 	void GROUP_TEST(std::function<int>);
-// 	void End();
-
-// 	private:
-// };
 

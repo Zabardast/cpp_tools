@@ -31,10 +31,11 @@ int test_case_two()
 		int foo = 0;
 
 		tst(foo == 0);
-		tst(foo == 0);
+		tst(foo == 1);
 		foo++;
 		tst(foo == 1);
 		tst(foo == 0);
+		std::cout << "local error_counter: " << error_counter << std::endl;
 	}
 
 	return error_counter;
@@ -42,9 +43,12 @@ int test_case_two()
 
 int main(int, char**)
 {
-
+	int error_counter = 0;
+	auto GP_TEST = GROUP_TEST(error_counter);
 	// test_case_one();
-	test_case_two();
+	GP_TEST(test_case_two);
+	GP_TEST(test_case_two);
+	// GROUP_TEST(test_case_two);
 
 	return 0;
 }
