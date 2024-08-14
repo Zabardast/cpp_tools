@@ -12,44 +12,58 @@
 #include<stdarg.h>
 
 
+#define DEBUG
+
 class SLOT
 {
 public:
 	SLOT(std::string p_test_name)
 	: test_name(p_test_name),
 	tests_done(),
-	tests_passed()
+	tests_passed(),
+	sec_tests_passed(1)
 	{};
 
-
-	template<typename T, typename... Args>
-	void TEST(std::string name, T test, Args... args){
-		
-		multiple_tests(test);
-		multiple_tests(args...);
-		// std::cout << name << tests_done << " / " << tests_passed << std::endl;
+	template<typename... Args>	
+	void TEST(std::string p_test_name,Args... p_args)
+	{
+		if(loop_test(p_args...))
+		{
+			#ifdef DEBUG
+			std::cout << p_test_name << " : " << "all tests passed " << std::endl;
+			#endif
+			tests_passed++;
+		}
+		tests_done++;
 	};
 
-	//variadic example in stack overflow
+	void report_from_test_runner()
+	{
+		std::cout << "Test: " << test_name << std::endl;
+        std::cout << "Tests passed: " << tests_passed << "/" << tests_done << std::endl;
+        if(tests_passed!= tests_done)
+        {
+            std::cout << "Test failed!" << std::endl;
+        }
+        else
+        {
+            std::cout << "Test passed!" << std::endl;
+		}
+        std::cout << std::endl;
+	};
+
+private:
 	template<typename T>
-	void multiple_tests(T test)
+	bool loop_test(T test)
 	{
-		tests_done++;
-		tests_passed &= test;
-
-
-		std::cout << " test:" << test << std::endl;
-	};
+		return sec_tests_passed &= test;
+	}
 
 	template<typename T, typename... Args>
-	void multiple_tests(T test, Args... args)
+	bool loop_test(T test, Args... args)
 	{
-		tests_done++;
-		tests_passed &= test;
-
-		std::cout << " test:" << test << std::endl;
-
-		multiple_tests(args...);
+		sec_tests_passed &= test;
+		return loop_test(args...);
 	};
 
 
@@ -59,7 +73,6 @@ private:
 
 	unsigned int tests_done;
 	unsigned int tests_passed;
+	unsigned int sec_tests_passed;
+	
 };
-
-
-// #define TEST(char* name, bool t1, ...) {printf(name);}
