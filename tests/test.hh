@@ -14,6 +14,9 @@
 
 #define DEBUG
 
+// TODO : remove SLOT 
+
+/*
 class SLOT
 {
 public:
@@ -77,6 +80,8 @@ private:
 	
 };
 
+*/
+
 //                    █████       ████ 
 //                  ███░░░███    ░░███ 
 //  █████ █████    ███   ░░███    ░███ 
@@ -94,17 +99,39 @@ private:
  */
 
 // constexpr void TEST (std::string, test...)
-#define TESTER(error_counter) [&error_counter](bool tests) { if (!tests) { ++error_counter; }}
 
+// mono test
 
-/**
- * @brief supervisor functions
- *  !//@method Begin() : use begin to start a test unit (like for a class)
- *  !//@method End() : used in the main return statement to finish a test unit
- *  @method GROUP_TEST(std::function<int>) takes a function and outputs the results of the tests that happen within
- */
+// #define TESTER(error_counter) [&error_counter](bool tests) { if (!tests) { ++error_counter; }}
 
-// todo
+// multiple tests
+
+// TODO : add log messages for DEBUG and INFO
+// TODO : add verbosity for witch error happend where -> give line number from the main file
+// TODO : add test message to TESTER to give context to the test in the console
+
+template<typename T>
+bool loop_test(T test)
+{
+	if(test)
+		return 0; // test successful
+	return 1;     // test failed
+}
+
+template<typename T, typename... Args>
+bool loop_test(T test, Args... args)
+{
+	if(!test)
+		return 1;   // test failed
+	return loop_test(args...);
+};
+
+// use variadic parameter in case the test need to check multiple entries or just to give more options when writing tests.
+#define TESTER(error_counter) [&error_counter](bool test, auto... multi_test) { error_counter += loop_test(test, multi_test...);};
+
+// group tests
+
+// TODO : add function for a summary of all the GROUP_TEST that are in the main feature test file.
 
 #include <functional>
 

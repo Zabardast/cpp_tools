@@ -2,6 +2,7 @@
 
 #include "test.hh"
 
+/*
 int test_case_one()
 {
 	int foo = 0;
@@ -19,22 +20,22 @@ int test_case_one()
 
 	return 0;
 }
-
+*/
 
 int test_case_two()
 {
 	int error_counter = 0;
-	auto tst = TESTER(error_counter);
+	auto TEST = TESTER(error_counter);
 
 	{
 
 		int foo = 0;
 
-		tst(foo == 0);
-		tst(foo == 1);
-		foo++;
-		tst(foo == 1);
-		tst(foo == 0);
+		TEST(foo == 0, foo == 0);
+		TEST(foo == 1);
+		// foo++;
+		// TEST(foo == 1);
+		// TEST(foo == 0);
 		std::cout << "local error_counter: " << error_counter << std::endl;
 	}
 
