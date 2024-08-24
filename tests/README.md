@@ -10,3 +10,4 @@ In every function including main I put a local error counter, it keeps track of 
 
 ### this system is expecialy good for testing small algorithms. Once you have toomany moving parts it becomes to heavy to maintain.
 
+[home](../README.md)
