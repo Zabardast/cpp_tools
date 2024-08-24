@@ -2,41 +2,39 @@
 
 #include "test.hh"
 
-/*
+
 int test_case_one()
 {
-	int foo = 0;
+	int error_counter = 0;
+	{
+		int foo = 0;
 
-	SLOT tst("main");
+		TEST("test 1", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
+		TEST("test 2", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
+		TEST("test 3", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 1);
+		TEST("test 4", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
+		TEST("test 5", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
+		TEST("test end", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
 
-	tst.TEST("test 1", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
-	tst.TEST("test 2", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
-	tst.TEST("test 3", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 1);
-	tst.TEST("test 4", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
-	tst.TEST("test 5", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
-	tst.TEST("test end", foo == 0, foo+1 == 1, foo == 0, foo== 0, foo == 0);
-
-	tst.report_from_test_runner();
-
-	return 0;
+	}
+	
+	return error_counter;
 }
-*/
+
 
 int test_case_two()
 {
 	int error_counter = 0;
-	auto TEST = TESTER(error_counter);
 
 	{
 
 		int foo = 0;
 
-		TEST(foo == 0, foo == 0);
-		TEST(foo == 1);
-		// foo++;
-		// TEST(foo == 1);
-		// TEST(foo == 0);
-		std::cout << "local error_counter: " << error_counter << std::endl;
+		TEST("test 1", foo == 0, foo == 0);
+		TEST("test 2", foo == 1);
+		foo++;
+		TEST("test 3", foo == 1);
+		TEST("test 4", foo == 0);
 	}
 
 	return error_counter;
@@ -45,11 +43,9 @@ int test_case_two()
 int main(int, char**)
 {
 	int error_counter = 0;
-	auto GP_TEST = GROUP_TEST(error_counter);
-	// test_case_one();
-	GP_TEST(test_case_two);
-	GP_TEST(test_case_two);
-	// GROUP_TEST(test_case_two);
+
+	GROUP_TEST(test_case_one);
+	GROUP_TEST(test_case_two);
 
 	return 0;
 }
